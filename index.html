@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>हस्तार | HASTAR STUDIO - Elite Streetwear</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@200;400;600;900&family=Noto+Sans+Devanagari:wght@100;400;700;900&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+    <style>
+        :root { --stone-950: #0c0a09; }
+        body { font-family: 'Outfit', sans-serif; background-color: #ffffff; color: var(--stone-950); scroll-behavior: smooth; }
+        .serif-italic { font-family: 'Instrument Serif', serif; font-style: italic; }
+        .hindi-brand { font-family: 'Noto Sans Devanagari', sans-serif; font-weight: 900; letter-spacing: -0.04em; }
+        .hindi-brand span { font-weight: 100; color: #a8a29e; }
+        .nav-link { position: relative; padding-bottom: 2px; }
+        .nav-link::after { content: ''; position: absolute; bottom: 0; left: 0; width: 100%; height: 1px; background: currentColor; transform: scaleX(0); transform-origin: right; transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1); }
+        .nav-link:hover::after { transform: scaleX(1); transform-origin: left; }
+        .product-card img { transition: transform 1.5s cubic-bezier(0.16, 1, 0.3, 1); }
+        .product-card:hover img { transform: scale(1.05); }
+        .cart-drawer { transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1); }
+        ::-webkit-scrollbar { width: 4px; }
+        ::-webkit-scrollbar-thumb { background: #292524; }
+    </style>
+</head>
+<body class="antialiased">
+
+    <!-- Navigation -->
+    <nav class="fixed top-0 w-full z-[100] bg-white/80 backdrop-blur-xl border-b border-stone-100">
+        <div class="max-w-[1800px] mx-auto px-6 md:px-12 h-24 flex justify-between items-center">
+            <div class="flex items-center gap-16">
+                <h1 class="hindi-brand text-4xl md:text-5xl tracking-tighter cursor-pointer">हस्त<span>ार</span></h1>
+                <div class="hidden lg:flex gap-10 text-[10px] font-black uppercase tracking-[0.3em]">
+                    <button onclick="filterProducts('All')" class="nav-link">Catalog</button>
+                    <button onclick="filterProducts('T-Shirt')" class="nav-link">Essential Tees</button>
+                    <button onclick="filterProducts('Hoodie')" class="nav-link">Heavy Hoodies</button>
+                </div>
+            </div>
+            <div class="flex items-center gap-8">
+                <button id="cartBtn" class="flex items-center gap-3 group">
+                    <span class="text-[10px] font-black uppercase tracking-widest opacity-40 group-hover:opacity-100 transition">Bag</span>
+                    <div class="relative">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4H6z"></path><path d="M3 6h18M16 10a4 4 0 01-8 0"></path></svg>
+                        <span id="cartCount" class="absolute -top-1 -right-1 bg-black text-white text-[8px] font-bold w-4 h-4 rounded-full flex items-center justify-center">0</span>
+                    </div>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero -->
+    <section class="h-screen relative flex items-center bg-stone-100 overflow-hidden">
+        <div class="absolute inset-0">
+            <img src="https://images.unsplash.com/photo-1556821840-3a63f95609a7?q=80&w=2000&auto=format&fit=crop" class="w-full h-full object-cover opacity-90">
+            <div class="absolute inset-0 bg-stone-900/10"></div>
+        </div>
+        <div class="relative z-10 w-full px-6 md:px-12 max-w-[1800px] mx-auto">
+            <div class="max-w-4xl">
+                <p class="hindi-brand text-2xl md:text-3xl text-white mb-6 italic opacity-80">हस्तार STUDIO</p>
+                <h2 class="text-7xl md:text-[11rem] font-black text-white leading-[0.85] tracking-tighter uppercase mb-12">REFINED<br><span class="serif-italic font-light lowercase text-stone-200">basics</span></h2>
+                <a href="#shop" class="inline-block bg-white text-black px-12 py-6 text-[10px] font-black tracking-[0.4em] uppercase hover:bg-black hover:text-white transition-all duration-500">Shop Collection</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Shop -->
+    <section id="shop" class="py-40 px-6 md:px-12 max-w-[1800px] mx-auto">
+        <div class="flex flex-col md:flex-row justify-between items-baseline mb-24 gap-8">
+            <div>
+                <h3 class="text-xs font-black uppercase tracking-[0.5em] text-stone-400 mb-4 italic">Objects of Desire</h3>
+                <h2 class="serif-italic text-5xl md:text-7xl">Current Selection</h2>
+            </div>
+            <div class="flex gap-8 text-[10px] font-black uppercase tracking-widest text-stone-400">
+                <button id="filterAll" onclick="filterProducts('All')" class="hover:text-black transition underline underline-offset-8">All</button>
+                <button id="filterTee" onclick="filterProducts('T-Shirt')" class="hover:text-black transition">Tees</button>
+                <button id="filterHoodie" onclick="filterProducts('Hoodie')" class="hover:text-black transition">Hoodies</button>
+            </div>
+        </div>
+        <div id="productGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-x-8 gap-y-24"></div>
+    </section>
+
+    <!-- Cart Sidebar -->
+    <div id="cartDrawer" class="fixed inset-0 z-[200] invisible">
+        <div id="cartOverlay" class="absolute inset-0 bg-black/20 backdrop-blur-sm opacity-0 transition-opacity duration-500"></div>
+        <div class="cart-drawer absolute right-0 top-0 h-full w-full max-w-lg bg-white p-12 transform translate-x-full flex flex-col shadow-2xl">
+            <div class="flex justify-between items-center mb-16">
+                <h2 class="text-xs font-black uppercase tracking-[0.5em]">Bag</h2>
+                <button id="closeCart"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"></path></svg></button>
+            </div>
+            <div id="cartItems" class="flex-grow space-y-10 overflow-y-auto pr-4"></div>
+            <div class="pt-10 border-t border-stone-100">
+                <div class="flex justify-between items-end mb-10">
+                    <span class="text-[10px] font-black uppercase tracking-widest text-stone-400 italic">Total</span>
+                    <span id="cartTotal" class="text-3xl font-light">₹0</span>
+                </div>
+                <button onclick="startCheckout()" class="w-full bg-black text-white py-8 text-[10px] font-black tracking-[0.4em] uppercase hover:bg-stone-800 transition">Proceed to Payment</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const products = [
+            { id: 1, name: "MONOLITH TEE", detail: "280GSM Bone Cotton", price: 1999, category: "T-Shirt", img: "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?q=80&w=800", stock: 12 },
+            { id: 2, name: "SIGNATURE HOODIE", detail: "450GSM Charcoal French Terry", price: 4499, category: "Hoodie", img: "https://images.unsplash.com/photo-1556821840-3a63f95609a7?q=80&w=800", stock: 8 },
+            { id: 3, name: "ARCHITECT TEE", detail: "Oversized Slate Gray", price: 1999, category: "T-Shirt", img: "https://images.unsplash.com/photo-1576566588028-4147f3842f27?q=80&w=800", stock: 15 },
+            { id: 4, name: "ESSENTIAL HOODIE", detail: "Bone White Heavy Weight", price: 3999, category: "Hoodie", img: "https://images.unsplash.com/photo-1513273159383-c2188c440021?q=80&w=800", stock: 0 }
+        ];
+
+        let cart = [];
+
+        function renderProducts(data) {
+            const grid = document.getElementById('productGrid');
+            grid.innerHTML = data.map(p => `
+                <div class="product-card group cursor-pointer ${p.stock <= 0 ? 'opacity-40 pointer-events-none' : ''}">
+                    <div class="relative aspect-[3/4] overflow-hidden bg-stone-100 mb-8">
+                        <img src="${p.img}" class="w-full h-full object-cover">
+                        ${p.stock <= 0 ? `<div class="absolute inset-0 bg-stone-900/10 flex items-center justify-center"><span class="text-[10px] font-black uppercase tracking-[0.4em] bg-white px-6 py-3">Sold Out</span></div>` : 
+                        `<div class="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors flex items-end p-6">
+                            <button onclick="addToCart(${p.id})" class="w-full bg-white text-black py-4 text-[10px] font-black tracking-[0.3em] uppercase opacity-0 translate-y-4 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-500 shadow-2xl">Add to Bag</button>
+                        </div>`}
+                    </div>
+                    <div class="flex justify-between items-start">
+                        <div class="space-y-1">
+                            <p class="text-[9px] font-black uppercase tracking-widest text-stone-400 italic">${p.category}</p>
+                            <h3 class="text-sm font-bold tracking-tight uppercase">${p.name}</h3>
+                            <p class="text-[10px] text-stone-500 uppercase tracking-widest">${p.detail}</p>
+                        </div>
+                        <span class="text-sm font-black italic">₹${p.price}</span>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        window.addToCart = (id) => {
+            const p = products.find(x => x.id === id);
+            const exists = cart.find(x => x.id === id);
+            if(exists) exists.qty++; else cart.push({...p, qty: 1});
+            updateCart();
+            document.getElementById('cartBtn').click();
+        };
+
+        function updateCart() {
+            document.getElementById('cartCount').textContent = cart.reduce((a, b) => a + b.qty, 0);
+            const list = document.getElementById('cartItems');
+            if(cart.length === 0) {
+                list.innerHTML = `<p class="text-[10px] font-black uppercase tracking-[0.4em] text-stone-300 text-center py-40 italic">Bag is Empty</p>`;
+            } else {
+                list.innerHTML = cart.map(item => `
+                    <div class="flex gap-8 items-center">
+                        <img src="${item.img}" class="w-24 h-32 object-cover bg-stone-100">
+                        <div class="flex-grow">
+                            <h4 class="text-xs font-black uppercase tracking-tight">${item.name}</h4>
+                            <p class="text-[9px] text-stone-400 mt-1 uppercase">Qty: ${item.qty}</p>
+                            <p class="text-sm font-black mt-3">₹${item.price * item.qty}</p>
+                        </div>
+                        <button onclick="removeFromCart(${item.id})" class="text-stone-300 hover:text-black transition">Remove</button>
+                    </div>
+                `).join('');
+            }
+            const total = cart.reduce((a, b) => a + (b.price * b.qty), 0);
+            document.getElementById('cartTotal').textContent = `₹${total}`;
+        }
+
+        window.removeFromCart = (id) => {
+            cart = cart.filter(i => i.id !== id);
+            updateCart();
+        };
+
+        function startCheckout() {
+            const total = cart.reduce((a, b) => a + (b.price * b.qty), 0);
+            if(total <= 0) return;
+
+            const options = {
+                "key": "YOUR_RAZORPAY_KEY_ID", // ADD YOUR KEY HERE
+                "amount": total * 100, // Amount in paise
+                "currency": "INR",
+                "name": "हस्तार STUDIO",
+                "description": "Premium Streetwear Order",
+                "handler": function (response){
+                    alert("Payment Successful! Order ID: " + response.razorpay_payment_id);
+                    cart = [];
+                    updateCart();
+                },
+                "prefill": { "name": "", "email": "", "contact": "" },
+                "theme": { "color": "#0c0a09" }
+            };
+            const rzp = new Razorpay(options);
+            rzp.open();
+        }
+
+        window.filterProducts = (cat) => {
+            renderProducts(cat === 'All' ? products : products.filter(p => p.category === cat));
+        };
+
+        function setupCart() {
+            const btn = document.getElementById('cartBtn');
+            const close = document.getElementById('closeCart');
+            const drawer = document.getElementById('cartDrawer');
+            const overlay = document.getElementById('cartOverlay');
+            const inner = document.querySelector('.cart-drawer');
+            const toggle = (s) => {
+                if(s) { drawer.classList.remove('invisible'); overlay.classList.add('opacity-100'); inner.classList.remove('translate-x-full'); }
+                else { overlay.classList.remove('opacity-100'); inner.classList.add('translate-x-full'); setTimeout(() => drawer.classList.add('invisible'), 600); }
+            };
+            btn.onclick = () => toggle(true);
+            close.onclick = () => toggle(false);
+            overlay.onclick = () => toggle(false);
+        }
+
+        window.onload = () => { renderProducts(products); setupCart(); };
+    </script>
+</body>
+</html>
