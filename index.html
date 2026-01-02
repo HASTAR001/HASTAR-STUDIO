@@ -1,92 +1,113 @@
 <!DOCTYPE html>
-<html lang="hi">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>हस्तर | Streetwear</title>
-
-<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;500;700&family=Noto+Sans+Devanagari:wght@700&display=swap" rel="stylesheet">
+<title>HASTAR | Wear The Dark</title>
 
 <style>
-body {
-  margin: 0;
-  font-family: 'Outfit', sans-serif;
-  background: #fff;
-  color: #111;
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family: Arial, Helvetica, sans-serif;
 }
 
-header {
-  padding: 20px;
-  text-align: center;
-  border-bottom: 1px solid #eee;
+body{
+  background:#000;
+  color:#eee;
 }
 
-.logo {
-  font-family: 'Noto Sans Devanagari', sans-serif;
-  font-size: 40px;
-  letter-spacing: 2px;
+header{
+  text-align:center;
+  padding:25px;
+  border-bottom:1px solid #222;
 }
 
-.hero {
-  padding: 80px 20px;
-  text-align: center;
+header h1{
+  font-size:3rem;
+  letter-spacing:6px;
 }
 
-.hero h1 {
-  font-size: 48px;
-  margin-bottom: 10px;
+header p{
+  color:#b30000;
+  margin-top:5px;
+  letter-spacing:2px;
 }
 
-.hero p {
-  font-size: 18px;
-  color: #555;
+.hero{
+  height:60vh;
+  background:radial-gradient(circle at top, #2b0000, #000);
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  text-align:center;
 }
 
-.products {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px,1fr));
-  gap: 30px;
-  padding: 40px;
+.hero h2{
+  font-size:2.2rem;
+  margin-bottom:20px;
 }
 
-.card {
-  border: 1px solid #eee;
-  padding: 15px;
-  text-align: center;
+.hero a{
+  background:#b30000;
+  color:#fff;
+  padding:14px 35px;
+  text-decoration:none;
+  font-weight:bold;
 }
 
-.card img {
-  width: 100%;
-  height: 300px;
-  object-fit: cover;
+.products{
+  padding:40px 20px;
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+  gap:25px;
 }
 
-.card h3 {
-  margin: 10px 0 5px;
+.product{
+  background:#111;
+  border:1px solid #222;
+  padding:15px;
+  text-align:center;
 }
 
-.card p {
-  color: #555;
+.product img{
+  width:100%;
+  height:280px;
+  object-fit:cover;
 }
 
-button {
-  background: #000;
-  color: #fff;
-  border: none;
-  padding: 12px 20px;
-  cursor: pointer;
-  margin-top: 10px;
+.product h3{
+  margin:10px 0;
 }
 
-button:hover {
-  opacity: 0.85;
+.product p{
+  color:#b30000;
+  font-weight:bold;
 }
 
-footer {
-  text-align: center;
-  padding: 20px;
-  border-top: 1px solid #eee;
-  margin-top: 40px;
+.product button{
+  margin-top:10px;
+  width:100%;
+  padding:12px;
+  background:#b30000;
+  color:#fff;
+  border:none;
+  font-weight:bold;
+  cursor:pointer;
+}
+
+footer{
+  text-align:center;
+  padding:20px;
+  border-top:1px solid #222;
+  font-size:0.9rem;
+}
+
+@media(max-width:600px){
+  header h1{font-size:2.2rem;}
+  .hero h2{font-size:1.6rem;}
 }
 </style>
 </head>
@@ -94,42 +115,46 @@ footer {
 <body>
 
 <header>
-  <div class="logo">हस्तर</div>
+  <h1>HASTAR</h1>
+  <p>WEAR THE DARK</p>
 </header>
 
 <section class="hero">
-  <h1>Premium Streetwear</h1>
-  <p>Heavyweight T-Shirts & Hoodies</p>
+  <h2>DEMONIC STREETWEAR</h2>
+  <a href="#shop">SHOP NOW</a>
 </section>
 
-<section class="products">
+<section id="shop" class="products">
 
-  <div class="card">
-    <img src="https://images.unsplash.com/photo-1521572163474-6864f9cf17ab">
-    <h3>Oversized T-Shirt</h3>
-    <p>₹1299</p>
-    <button onclick="order('Oversized T-Shirt',1299)">Order on WhatsApp</button>
+  <div class="product">
+    <img src="https://picsum.photos/400/400?random=1">
+    <h3>Black Oversized Tee</h3>
+    <p>₹999</p>
+    <button onclick="orderWhatsApp('Black Oversized Tee - ₹999')">
+      Order on WhatsApp
+    </button>
   </div>
 
-  <div class="card">
-    <img src="https://images.unsplash.com/photo-1600180758890-6b94519a8ba6">
-    <h3>Classic Hoodie</h3>
+  <div class="product">
+    <img src="https://picsum.photos/400/400?random=2">
+    <h3>Demonic Hoodie</h3>
     <p>₹1999</p>
-    <button onclick="order('Classic Hoodie',1999)">Order on WhatsApp</button>
+    <button onclick="orderWhatsApp('Demonic Hoodie - ₹1999')">
+      Order on WhatsApp
+    </button>
   </div>
 
 </section>
 
 <footer>
-  © Hastar Studio
+  © 2026 HASTAR | Built in Darkness 😈
 </footer>
 
 <script>
-const WHATSAPP = "918209994788";
-
-function order(product, price) {
-  const msg = `Hello, mujhe *${product}* order karni hai.\nPrice: ₹${price}`;
-  window.open(`https://wa.me/${WHATSAPP}?text=${encodeURIComponent(msg)}`);
+function orderWhatsApp(product){
+  var phone = "8209994788"; // apna number
+  var msg = "I want to order: " + product + " (HASTAR)";
+  window.open("https://wa.me/91" + phone + "?text=" + encodeURIComponent(msg));
 }
 </script>
 
