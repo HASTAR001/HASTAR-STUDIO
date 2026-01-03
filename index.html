@@ -18,23 +18,32 @@ body{
   color:#eee;
 }
 
+/* HEADER */
 header{
   text-align:center;
-  padding:25px;
+  padding:20px;
   border-bottom:1px solid #222;
 }
 
+.logo{
+  width:120px;
+  display:block;
+  margin:0 auto 10px;
+  filter: drop-shadow(0 0 12px #b30000);
+}
+
 header h1{
-  font-size:3rem;
+  font-size:2.8rem;
   letter-spacing:6px;
 }
 
 header p{
   color:#b30000;
-  margin-top:5px;
   letter-spacing:2px;
+  margin-top:5px;
 }
 
+/* HERO */
 .hero{
   height:60vh;
   background:radial-gradient(circle at top, #2b0000, #000);
@@ -58,10 +67,11 @@ header p{
   font-weight:bold;
 }
 
+/* PRODUCTS */
 .products{
   padding:40px 20px;
   display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+  grid-template-columns:repeat(auto-fit, minmax(250px,1fr));
   gap:25px;
 }
 
@@ -92,12 +102,13 @@ header p{
   width:100%;
   padding:12px;
   background:#b30000;
-  color:#fff;
+  color:white;
   border:none;
   font-weight:bold;
   cursor:pointer;
 }
 
+/* FOOTER */
 footer{
   text-align:center;
   padding:20px;
@@ -115,6 +126,9 @@ footer{
 <body>
 
 <header>
+  <!-- ONLY LOGO ICON -->
+  <img src="images/logo.png" alt="HASTAR Logo" class="logo">
+
   <h1>HASTAR</h1>
   <p>WEAR THE DARK</p>
 </header>
@@ -127,7 +141,7 @@ footer{
 <section id="shop" class="products">
 
   <div class="product">
-    <img src="https://picsum.photos/400/400?random=1">
+    <img src="images/tshirt1.jpg" alt="Black Oversized Tee">
     <h3>Black Oversized Tee</h3>
     <p>₹999</p>
     <button onclick="orderWhatsApp('Black Oversized Tee - ₹999')">
@@ -136,7 +150,7 @@ footer{
   </div>
 
   <div class="product">
-    <img src="https://picsum.photos/400/400?random=2">
+    <img src="images/hoodie1.jpg" alt="Demonic Hoodie">
     <h3>Demonic Hoodie</h3>
     <p>₹1999</p>
     <button onclick="orderWhatsApp('Demonic Hoodie - ₹1999')">
